@@ -15,6 +15,9 @@ namespace TylerCauthen
         {
             gameController = FindObjectOfType<GameController>();
         }
+        void Start()
+        {
+        }
 
         // Update is called once per frame
         void Update()
