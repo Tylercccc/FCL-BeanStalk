@@ -344,6 +344,10 @@ MonoBehaviour:
   Score: {fileID: 0}
   Combo: {fileID: 0}
   currentAnim: {fileID: 0}
+  RedCount: 0
+  BlueCount: 0
+  PinkCount: 0
+  YellowCount: 0
   currentBean: 0
 --- !u!4 &706409005
 Transform:
@@ -384,7 +388,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: d550291dbbd0f4b0585b74b013ef3baf, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -402,6 +406,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa99accc7b1b44728be14f2120f62e75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  beanColor: 2
+  color: 
+  order: 0
 --- !u!82 &919306423
 AudioSource:
   m_ObjectHideFlags: 0
@@ -504,6 +511,21 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 180696024533430553}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &953915212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953915211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa99accc7b1b44728be14f2120f62e75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  beanColor: 0
+  color: 
+  order: 0
 --- !u!4 &953915213 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 180696023859488340, guid: 0f0ae02d9ef2c433bbde811af35b34df,
@@ -523,7 +545,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: d550291dbbd0f4b0585b74b013ef3baf, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -650,7 +672,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: d550291dbbd0f4b0585b74b013ef3baf, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -668,6 +690,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa99accc7b1b44728be14f2120f62e75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  beanColor: 1
+  color: 
+  order: 0
 --- !u!82 &1079063845
 AudioSource:
   m_ObjectHideFlags: 0
@@ -872,7 +897,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: d550291dbbd0f4b0585b74b013ef3baf, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -890,6 +915,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa99accc7b1b44728be14f2120f62e75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  beanColor: 3
+  color: 
+  order: 0
 --- !u!82 &1650583770
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1021,22 +1049,22 @@ PrefabInstance:
     - target: {fileID: 180696023859488340, guid: 0f0ae02d9ef2c433bbde811af35b34df,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 180696023859488340, guid: 0f0ae02d9ef2c433bbde811af35b34df,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 180696023859488340, guid: 0f0ae02d9ef2c433bbde811af35b34df,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.08715578
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 180696023859488340, guid: 0f0ae02d9ef2c433bbde811af35b34df,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9961947
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 180696023859488340, guid: 0f0ae02d9ef2c433bbde811af35b34df,
         type: 3}
@@ -1056,7 +1084,7 @@ PrefabInstance:
     - target: {fileID: 180696023859488340, guid: 0f0ae02d9ef2c433bbde811af35b34df,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 180696023859488340, guid: 0f0ae02d9ef2c433bbde811af35b34df,
         type: 3}
@@ -1073,7 +1101,13 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 180696023859488343, guid: 0f0ae02d9ef2c433bbde811af35b34df,
+        type: 3}
+      propertyPath: BeanPoints
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 180696023859488343, guid: 0f0ae02d9ef2c433bbde811af35b34df, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0f0ae02d9ef2c433bbde811af35b34df, type: 3}
 --- !u!1001 &1232196867398888311
 PrefabInstance:
