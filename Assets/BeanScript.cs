@@ -2,20 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BeanScript : MonoBehaviour
+namespace TylerCauthen
 {
-    // Start is called before the first frame update
-    public enum BeanColor{ Red, Blue, Green, Yellow };
-    int BeanPoints = 1;
-
-    void Start()
+    public class BeanScript : MonoBehaviour
     {
-        
-    }
+        // Start is called before the first frame update
+        public enum BeanColor { Red, Blue, Green, Yellow };
+        GameController gameController;
+        int BeanPoints = 1;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        void Awake()
+        {
+            gameController = FindObjectOfType<GameController>();
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
+        public void Reset()
+        {
+            gameController.RestartCycle();           
+        }
     }
 }

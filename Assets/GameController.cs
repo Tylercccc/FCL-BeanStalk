@@ -3,53 +3,75 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class GameController : MonoBehaviour
+namespace TylerCauthen
 {
-    public GameObject[] Bean;
-    public TextMeshPro Score, Combo;
-
-    float cycleTime = 2;
-    int beanNum = 0;
-
-    // Start is called before the first frame update
-    void Start()
+    public class GameController : MonoBehaviour
     {
-        StartCoroutine(CycleBeans(0));
-    }
+        public GameObject[] Bean;
+        public TextMeshPro Score, Combo;
+        public Animator currentAnim;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
+        float cycleTime = 2;
+        int beanNum = 0;
+        public int currentBean = 0;
+        bool pauseCycle = false;
+        Coroutine lastRoutine = null;
+
+        // Start is called before the first frame update
+        void Start()
         {
-            PlaceBean();
+            StartCoroutine(CycleBeans(0));
         }
-    }
-    void CycleBeans()
-    {
 
-    }
-    void PlaceBean()
-    {
-
-    }
-
-    IEnumerator CycleBeans(float waitTime)
-    {
-        yield return new WaitForSeconds(waitTime);
-
-        if (beanNum != 0)
-            Bean[beanNum - 1].SetActive(false);
-        else if (beanNum == 0)
-            Bean[3].SetActive(false);
-        
-        Bean[beanNum].SetActive(true);
-
-        if (beanNum < 3)
-            beanNum++;
-        else
+        // Update is called once per frame
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                PlaceBean();
+            }
+        }
+        public void RestartCycle()
+        {
+            StopCoroutine(lastRoutine);
+            Bean[currentBean].GetComponent<Animator>().SetBool("Toss", false);
             beanNum = 0;
+            pauseCycle = false;
+            StartCoroutine(CycleBeans(cycleTime));
+        }
+        void PlaceBean()
+        {
+            pauseCycle = true;
+            StopCoroutine(lastRoutine);
+            currentAnim = Bean[currentBean].GetComponent<Animator>();
+            Bean[currentBean].GetComponent<Animator>().SetBool("Toss", true);
+        }
 
-        StartCoroutine(CycleBeans(cycleTime));
+        IEnumerator CycleBeans(float waitTime)
+        {
+            yield return new WaitForSeconds(waitTime);
+            if (pauseCycle == false)
+            {
+                if (beanNum != 0)
+                    Bean[beanNum - 1].SetActive(false);
+                else if (beanNum == 0)
+                    Bean[3].SetActive(false);
+
+                Bean[beanNum].SetActive(true);
+                currentBean = beanNum;
+
+                if (beanNum < 3)
+                    beanNum++;
+                else
+                    beanNum = 0;
+
+                lastRoutine=StartCoroutine(CycleBeans(cycleTime));
+            }
+            else
+            {
+                Bean[currentBean].SetActive(true);
+                //yield break;
+            }
+        }
     }
 }
