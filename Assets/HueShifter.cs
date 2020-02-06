@@ -7,9 +7,13 @@ public class HueShifter : MonoBehaviour
     public float Speed = 1;
     private Renderer rend;
 
+    private void OnEnable()
+    {
+        transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+        iTween.PunchScale(gameObject, new Vector3(1f, 1f, 1f), 3f);
+    }
     void Start()
     {
-        iTween.PunchScale(gameObject, new Vector3(1f, 1f, 1f), 3f);
         rend = GetComponent<Renderer>();
         iTween.RotateTo(gameObject, iTween.Hash(
             "rotation", new Vector3(0, 180, rotateAmt),

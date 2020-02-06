@@ -11,6 +11,7 @@ namespace TylerCauthen
     {
         public GameObject[] Bean;
         public TextMeshPro Score, Combo;
+        public GameObject ComboText;
         public Animator currentAnim;
         public List<BeanClass> beans = new List<BeanClass>();
         public int RedCount, BlueCount, PinkCount, YellowCount;
@@ -20,6 +21,8 @@ namespace TylerCauthen
         public int currentBean = 0;
         bool pauseCycle = false;
         bool acceptInput = true;
+        int combo = 0;
+        public string previousColor = null;
 
         Coroutine lastRoutine = null;
         
@@ -35,8 +38,9 @@ namespace TylerCauthen
         {
             if (Input.GetKeyDown(KeyCode.Space) && acceptInput == true)
             {
-                PlaceBean();
                 acceptInput = false;
+                PlaceBean();
+                ComboOnOff();
             }
         }
         public void RestartCycle()
@@ -53,6 +57,7 @@ namespace TylerCauthen
             cycleTime = cycleTime - 0.25f;
             currentAnim = Bean[currentBean].GetComponent<Animator>();
             Bean[currentBean].GetComponent<Animator>().SetBool("Toss", true);
+            Bean[currentBean].transform.rotation = Quaternion.identity;
 
             string _color = Bean[currentBean].GetComponent<Bean>().beanColor.ToString();
             beans.Add(new BeanClass(_color,1));
@@ -66,7 +71,7 @@ namespace TylerCauthen
             if (reset == true)
             {
                 Bean[currentBean].SetActive(false);
-                acceptInput = true; 
+             
             }
             if (pauseCycle == false)
             {
@@ -84,6 +89,7 @@ namespace TylerCauthen
                     beanNum = 0;
 
                 lastRoutine=StartCoroutine(CycleBeans(cycleTime, false));
+                acceptInput = true;
             }
             else
             {
@@ -110,8 +116,7 @@ namespace TylerCauthen
         }
         public void DisplayResults(List<BeanClass> results, string color)
         {
-            string _previousColor = null;
-            int combo = 0;
+            
             int _red = 0;
             int _blue = 0;
             int _pink = 0;
@@ -119,17 +124,6 @@ namespace TylerCauthen
 
             foreach (BeanClass b in results)
             {
-                if(_previousColor != null)
-                {
-                    if (b.BeanColor == _previousColor)
-                    {
-                        combo++;
-                    }
-                    else
-                        combo = 0;
-                }
-                _previousColor = b.BeanColor;
-                
                 print(b.BeanColor);
                 if (b.BeanColor == "Red")
                 {
@@ -149,7 +143,29 @@ namespace TylerCauthen
                     _yellow++;
                 }
             }
-            print("Number of Red: " + _red + ", " + "Blue: " + _blue + ", " + "Pink: " + _pink + ", " + "Yellow: " + _yellow + ", " + "Combo "+ combo );
+            print("Number of Red: " + _red + ", " + "Blue: " + _blue + ", " + "Pink: " + _pink + ", " + "Yellow: " + _yellow);
+        }
+        void ComboOnOff()
+        {
+            if (previousColor != null)
+            {
+                if (Bean[currentBean].GetComponent<Bean>().beanColor.ToString() == previousColor)
+                {
+                    combo++;
+                }
+                else
+                    combo = 0;
+            }
+            previousColor = Bean[currentBean].GetComponent<Bean>().beanColor.ToString();
+            if (combo > 0)
+            {
+                ComboText.SetActive(true);
+            }
+            else
+            {
+                ComboText.SetActive(false);
+            }
+            print("Combo " + combo);
         }
     }
 }

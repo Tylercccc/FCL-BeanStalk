@@ -22,6 +22,7 @@ namespace TylerCauthen
         void OnEnable()
         {
             GetComponent<Animator>().enabled = false;
+            transform.rotation = Quaternion.Euler(0f, 0f, 30f);
             transform.localPosition = new Vector3(0, 0, 0);
             GetComponent<Animator>().enabled = true;
             GetComponent<Animator>().Play("Idle", -1, 0.1f);
