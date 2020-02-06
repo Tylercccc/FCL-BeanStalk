@@ -128,10 +128,8 @@ namespace TylerCauthen
                     else
                         combo = 0;
                 }
-                else
-                {
-                    _previousColor = b.BeanColor;
-                }
+                _previousColor = b.BeanColor;
+                
                 print(b.BeanColor);
                 if (b.BeanColor == "Red")
                 {
