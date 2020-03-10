@@ -12,7 +12,10 @@ namespace TylerCauthen
         public GameObject[] Bean;
         public TextMeshPro Score, Combo;
         public GameObject ComboText;
+        public TextMeshPro ComboNum;
+        public TextMeshPro BeansLeft;
         public Animator currentAnim;
+        public Animator BagAnim;
         public List<BeanClass> beans = new List<BeanClass>();
         public int RedCount, BlueCount, PinkCount, YellowCount;
 
@@ -21,7 +24,8 @@ namespace TylerCauthen
         public int currentBean = 0;
         bool pauseCycle = false;
         bool acceptInput = true;
-        int combo = 0;
+        int combo = 1;
+        int beansLeft = 20;
         public string previousColor = null;
 
         Coroutine lastRoutine = null;
@@ -36,15 +40,19 @@ namespace TylerCauthen
         // Update is called once per frame
         void Update()
         {
+            ComboNum.text = combo.ToString();
             if (Input.GetKeyDown(KeyCode.Space) && acceptInput == true)
             {
+                beansLeft--;
                 acceptInput = false;
                 PlaceBean();
                 ComboOnOff();
             }
+            BeansLeft.text = beansLeft.ToString();
         }
         public void RestartCycle()
         {
+         
             Bean[currentBean].GetComponent<Animator>().SetBool("Toss", false);
             beanNum = 0;
             pauseCycle = false;
@@ -56,6 +64,7 @@ namespace TylerCauthen
             StopCoroutine(lastRoutine);
             cycleTime = cycleTime - 0.25f;
             currentAnim = Bean[currentBean].GetComponent<Animator>();
+            BagAnim.SetBool("startShake", true);
             Bean[currentBean].GetComponent<Animator>().SetBool("Toss", true);
             Bean[currentBean].transform.rotation = Quaternion.identity;
 
@@ -80,6 +89,7 @@ namespace TylerCauthen
                 else if (beanNum == 0)
                     Bean[3].SetActive(false);
 
+                BagAnim.SetBool("startShake", false);
                 Bean[beanNum].SetActive(true);
                 currentBean = beanNum;
 
@@ -151,13 +161,14 @@ namespace TylerCauthen
             {
                 if (Bean[currentBean].GetComponent<Bean>().beanColor.ToString() == previousColor)
                 {
+                    iTween.PunchScale(ComboText.gameObject, new Vector3(0.3f, 0.3f, 0.3f), 0.5f);
                     combo++;
                 }
                 else
-                    combo = 0;
+                    combo = 1;
             }
             previousColor = Bean[currentBean].GetComponent<Bean>().beanColor.ToString();
-            if (combo > 0)
+            if (combo > 1)
             {
                 ComboText.SetActive(true);
             }
